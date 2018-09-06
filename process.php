@@ -133,15 +133,15 @@ if($routes[1] == '') {
 if($routes[1] == '2') {
 	// I know I should use TILE_SIZE, MAX_STEPS etc but... 
 	
-    $zoom = $routes[2];
+    $zoom = 1/(2 ** $routes[2]);
     $x = $routes[3]; // centre
     $y = $routes[4]; // centre
     $im = imagecreatetruecolor(512, 512);
     
     for ($i = 0; $i < 512; $i++) {
         for ($j = 0; $j < 512; $j++) {
-            $xt = ($j - 256)/(2 ** $zoom) + $x;
-            $yt = (-$i + 256)/(2 ** $zoom) + $y; // adjustment for PHP coordinate system (different to the C system used for COMP1511)
+            $xt = ($j - 256)*$zoom + $x;
+            $yt = (-$i + 256)*$zoom + $y; // adjustment for PHP coordinate system (different to the C system used for COMP1511)
             $count = escapeSteps($xt, $yt);
             if ($count == 256) {
                 // In the Mandelbrot set. Colour black
